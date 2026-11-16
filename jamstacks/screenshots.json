@@ -1,0 +1,22 @@
+{
+  "templateId": "next-pizzeria-woodfired",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "fullPage": false,
+  "captures": [
+    {
+      "mode": "light",
+      "sha256": "f5c6cc38224d68dfda770ad4c51e86b23321911f9c716f50a272caa944952aff",
+      "file": "jamstacks/home-light.jpg",
+      "bytes": 164103
+    },
+    {
+      "mode": "dark",
+      "sha256": "2d9d3c7f82c90166d20ea98178b2b90fb6929bc09f8bffc3f449afcd71ab9cae",
+      "file": "jamstacks/home-dark.jpg",
+      "bytes": 141323
+    }
+  ]
+}

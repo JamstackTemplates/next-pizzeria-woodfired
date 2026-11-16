@@ -1,0 +1,599 @@
+/* Acme Pizza styles: Tailwind CSS v4 plus this template's customizations.
+   Components use Tailwind utility classes; this file holds what utilities can't:
+   1. colour tokens for light/dark   2. the Tailwind theme built from them
+   3. base element styles           4. shared building blocks (.button, .chip, ...)
+   5. illustrations and animation   6. stateful pieces styled by data attributes */
+@import 'tailwindcss';
+
+/* `dark:` follows the jamstacks theme toggle (html.dark). Prefer colour tokens instead. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------
+   1. Colour tokens. Change the palette here.
+   Light mode is "flour & fire": flour white, charred black, tomato red and basil green.
+   Dark mode is "the oven at night": charcoal, ash, flame orange and warm cream.
+   Every colour that changes with the theme is a variable here, so components use
+   utilities like `bg-surface text-ink` and never need `dark:` variants.
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #f7f2ea;
+  --bg-band: #efe5d5;
+  --surface: #fcf7ef;
+  --surface-2: #f3e9da;
+  --text: #1c1714;
+  --muted: #5f5249;
+  --line: #e1d2bc;
+  --accent: #b5361b;
+  --accent-strong: #8c2812;
+  --accent-soft: #f7dccf;
+  --basil: #3f6b3a;
+  --basil-soft: #dfe9d6;
+  --ember: #d9661f;
+  --on-accent: #ffffff;
+  --danger: #a3271a;
+  --success: #3f6b3a;
+  --focus: #b5361b;
+  /* Burnt card edges and leopard-spot char marks. */
+  --burn: rgba(120, 62, 22, .22);
+  --char: #2a1d16;
+  --elev-1: 0 1px 2px rgba(60, 35, 15, .08), 0 3px 8px rgba(60, 35, 15, .06);
+  --elev-2: 0 2px 4px rgba(60, 35, 15, .06), 0 24px 48px -18px rgba(90, 40, 15, .32);
+  /* Flour-dust speckle (light) / ash and ember grain (dark). */
+  --texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Ccircle cx='45.3' cy='21.1' r='0.99' fill='%238a6a48'/%3E%3Ccircle cx='115.0' cy='13.2' r='0.92' fill='%23b08a5c'/%3E%3Ccircle cx='5.2' cy='60.7' r='0.46' fill='%238a6a48'/%3E%3Ccircle cx='77.1' cy='8.3' r='0.91' fill='%23b08a5c'/%3E%3Ccircle cx='88.3' cy='81.6' r='0.46' fill='%23ffffff'/%3E%3Ccircle cx='6.9' cy='31.0' r='0.90' fill='%23b08a5c'/%3E%3Ccircle cx='40.5' cy='20.2' r='0.51' fill='%23ffffff'/%3E%3Ccircle cx='78.4' cy='95.5' r='0.49' fill='%23b08a5c'/%3E%3Ccircle cx='52.1' cy='76.7' r='0.46' fill='%238a6a48'/%3E%3Ccircle cx='86.7' cy='69.5' r='0.88' fill='%23ffffff'/%3E%3Ccircle cx='65.2' cy='129.3' r='0.73' fill='%23b08a5c'/%3E%3Ccircle cx='111.2' cy='97.9' r='0.62' fill='%23ffffff'/%3E%3Ccircle cx='73.5' cy='122.5' r='1.06' fill='%23ffffff'/%3E%3Ccircle cx='85.3' cy='10.2' r='0.86' fill='%23b08a5c'/%3E%3Ccircle cx='106.0' cy='21.3' r='0.84' fill='%238a6a48'/%3E%3Ccircle cx='134.7' cy='10.9' r='0.90' fill='%23ffffff'/%3E%3Ccircle cx='47.6' cy='49.0' r='0.85' fill='%23ffffff'/%3E%3Ccircle cx='9.6' cy='13.1' r='0.64' fill='%238a6a48'/%3E%3Ccircle cx='8.5' cy='98.2' r='0.98' fill='%23ffffff'/%3E%3Ccircle cx='39.8' cy='54.0' r='1.00' fill='%238a6a48'/%3E%3Ccircle cx='131.7' cy='49.8' r='0.95' fill='%23ffffff'/%3E%3Ccircle cx='8.3' cy='107.6' r='0.52' fill='%23b08a5c'/%3E%3Ccircle cx='55.7' cy='128.4' r='0.85' fill='%23b08a5c'/%3E%3Ccircle cx='62.9' cy='76.9' r='1.20' fill='%23ffffff'/%3E%3Ccircle cx='121.0' cy='39.0' r='0.77' fill='%23ffffff'/%3E%3Ccircle cx='95.6' cy='53.3' r='0.61' fill='%238a6a48'/%3E%3C/svg%3E");
+  --texture-opacity: .55;
+  --glow-1: rgba(240, 160, 90, .22);
+  --glow-2: rgba(181, 54, 27, .08);
+
+  /* Oven: the logo mark, peel divider and the firelight over the hero picture */
+  --brick: #c8673f;
+  --mortar: #efdcc4;
+  --brick-shade: #b65a36;
+  --header-glow: rgba(255, 154, 74, .16);
+  --mouth: #2b1a12;
+  --fire-2: #ffb347;
+  --fire-glow: #ff9a4a;
+  --glow-opacity: .35;
+  --peel: #d29e64;
+  --peel-2: #ad7b45;
+  --flour: rgba(255, 255, 255, .9);
+
+  /* Pizza drawings */
+  --crust: #e2aa60;
+  --crust-light: #f2c98d;
+  --crust-shadow: #b97a3a;
+  --sauce: #c63a20;
+  --sauce-spot: #a32a15;
+  --bianca: #f4e4bb;
+  --bianca-spot: #e6cd90;
+  --pizza-shadow: rgba(70, 35, 10, .16);
+  --oven-char: #3a2216;
+
+  /* Small menu drawings */
+  --art-line: #2a1f1a;
+  --art-ceramic: #fffaf0;
+  --art-glass: rgba(255, 255, 255, .7);
+  --art-dough: #e7b46a;
+  --art-leaf: #4f8a3a;
+  --art-cream: #fbf1dc;
+  --art-cocoa: #5a3420;
+
+  /* Hand-lettered specials board */
+  --board: #221c19;
+  --board-frame: #9a6a3e;
+  --board-ink: #fbf3e4;
+  --board-accent: #ffc56b;
+
+  /* Google Maps embed: untouched in light mode */
+  --map-filter: none;
+
+  --footer-bg: #1c1714;
+
+  --measure: 40rem;
+  --page: 76rem;
+  --gutter: clamp(1rem, 4.5vw, 2.75rem);
+  --space-section: clamp(4rem, 8vw, 7rem);
+  --header-h: 4.5rem;
+
+  /* --------------------------------------------------------------
+     Jamstacks component fallbacks (inherited by hosted components).
+     Published portal themes may override these on the host element.
+     Never style the component's shadow-root internals directly.
+     -------------------------------------------------------------- */
+  --jamstacks-font-family: var(--font-sans);
+  --jamstacks-font-size: 16px;
+  --jamstacks-color-primary: var(--accent);
+  --jamstacks-color-background: var(--surface);
+  --jamstacks-color-text: var(--text);
+  --jamstacks-color-muted: var(--muted);
+  --jamstacks-color-border: var(--line);
+  --jamstacks-color-danger: var(--danger);
+  --jamstacks-color-success: var(--success);
+  --jamstacks-border-radius: var(--radius-ui);
+  --jamstacks-control-height: 48px;
+  --jamstacks-spacing: 14px;
+  /* Component extension supported by the current support-form runtime: fill the page column. */
+  --jamstacks-form-max-width: 100%;
+
+  /* Shared theme toggle (jamstacks package) */
+  --jamstacks-toggle-color: var(--text);
+  --jamstacks-toggle-dark-color: var(--text);
+  --jamstacks-toggle-border: var(--line);
+  --jamstacks-toggle-background: var(--surface);
+  --jamstacks-toggle-dark-background: var(--surface);
+
+  color-scheme: light;
+}
+
+/* Explicit choices override the device; the media fallback also works without JavaScript.
+   Keep these two blocks identical. */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+    --bg: #121010;
+    --bg-band: #181413;
+    --surface: #1f1a18;
+    --surface-2: #29221f;
+    --text: #f4e8d6;
+    --muted: #c0b19d;
+    --line: #3b322d;
+    --accent: #f08a3c;
+    --accent-strong: #ffb27a;
+    --accent-soft: #3d2416;
+    --basil: #94c785;
+    --basil-soft: #1f2b1c;
+    --ember: #ffb347;
+    --on-accent: #1a1210;
+    --danger: #ff9c86;
+    --success: #94c785;
+    --focus: #ffb347;
+    --burn: rgba(0, 0, 0, .55);
+    --char: #0c0807;
+    --elev-1: 0 1px 2px rgba(0, 0, 0, .4);
+    --elev-2: 0 2px 4px rgba(0, 0, 0, .35), 0 26px 50px -18px rgba(0, 0, 0, .75);
+    --texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Ccircle cx='63.3' cy='78.4' r='0.95' fill='%238a7d74'/%3E%3Ccircle cx='63.3' cy='119.7' r='0.47' fill='%238a7d74'/%3E%3Ccircle cx='88.2' cy='111.0' r='0.41' fill='%236b605a'/%3E%3Ccircle cx='19.9' cy='75.4' r='0.93' fill='%23f08a3c'/%3E%3Ccircle cx='83.4' cy='55.5' r='0.64' fill='%23ffb070'/%3E%3Ccircle cx='87.2' cy='116.4' r='0.39' fill='%23f08a3c'/%3E%3Ccircle cx='26.6' cy='33.9' r='0.37' fill='%238a7d74'/%3E%3Ccircle cx='45.7' cy='82.7' r='0.48' fill='%23ffb070'/%3E%3Ccircle cx='89.6' cy='70.0' r='0.78' fill='%238a7d74'/%3E%3Ccircle cx='91.7' cy='56.9' r='0.71' fill='%23f08a3c'/%3E%3Ccircle cx='99.1' cy='44.1' r='0.50' fill='%236b605a'/%3E%3Ccircle cx='4.2' cy='78.8' r='0.42' fill='%23f08a3c'/%3E%3Ccircle cx='118.5' cy='54.1' r='0.97' fill='%23f08a3c'/%3E%3Ccircle cx='29.9' cy='129.8' r='0.38' fill='%238a7d74'/%3E%3Ccircle cx='137.3' cy='55.6' r='0.40' fill='%23ffb070'/%3E%3Ccircle cx='109.0' cy='37.8' r='0.41' fill='%236b605a'/%3E%3Ccircle cx='2.1' cy='57.4' r='0.95' fill='%23ffb070'/%3E%3Ccircle cx='34.5' cy='14.1' r='0.39' fill='%238a7d74'/%3E%3Ccircle cx='24.9' cy='78.3' r='0.64' fill='%23ffb070'/%3E%3Ccircle cx='137.9' cy='107.7' r='0.62' fill='%238a7d74'/%3E%3Ccircle cx='16.3' cy='58.9' r='0.49' fill='%236b605a'/%3E%3Ccircle cx='121.0' cy='136.5' r='0.74' fill='%23f08a3c'/%3E%3C/svg%3E");
+    --texture-opacity: .5;
+    --glow-1: rgba(240, 120, 40, .22);
+    --glow-2: rgba(200, 60, 20, .16);
+
+    --brick: #7e3a25;
+    --mortar: #2c1a14;
+    --brick-shade: #6a2f1e;
+    --header-glow: rgba(255, 122, 42, .3);
+    --mouth: #1a0d08;
+    --fire-2: #ffb347;
+    --fire-glow: #ff7a2a;
+    --glow-opacity: .9;
+    --peel: #a87645;
+    --peel-2: #7f5530;
+    --flour: rgba(255, 245, 230, .5);
+
+    --crust: #d79a52;
+    --crust-light: #ebbb7a;
+    --crust-shadow: #9b6431;
+    --sauce: #b8321c;
+    --sauce-spot: #8f2412;
+    --bianca: #ecd7a6;
+    --bianca-spot: #d8bb78;
+    --pizza-shadow: rgba(0, 0, 0, .45);
+    --oven-char: #24140c;
+
+    --art-line: #0d0a09;
+    --art-ceramic: #efe5d6;
+    --art-glass: rgba(255, 255, 255, .22);
+    --art-dough: #d9a55e;
+    --art-leaf: #6aa152;
+    --art-cream: #f3e6cc;
+    --art-cocoa: #4a2a18;
+
+    --board: #1a1513;
+    --board-frame: #6b4528;
+    --board-ink: #f8ecd6;
+    --board-accent: #ffb347;
+
+    --map-filter: invert(.9) hue-rotate(180deg) saturate(.6) brightness(.85) contrast(.92) sepia(.15);
+
+    --footer-bg: #0a0807;
+
+    /* The hosted form draws white button text, so its primary stays dark enough to read. */
+    --jamstacks-color-primary: #b5361b;
+  }
+}
+
+:root.dark {
+  color-scheme: dark;
+  --bg: #121010;
+  --bg-band: #181413;
+  --surface: #1f1a18;
+  --surface-2: #29221f;
+  --text: #f4e8d6;
+  --muted: #c0b19d;
+  --line: #3b322d;
+  --accent: #f08a3c;
+  --accent-strong: #ffb27a;
+  --accent-soft: #3d2416;
+  --basil: #94c785;
+  --basil-soft: #1f2b1c;
+  --ember: #ffb347;
+  --on-accent: #1a1210;
+  --danger: #ff9c86;
+  --success: #94c785;
+  --focus: #ffb347;
+  --burn: rgba(0, 0, 0, .55);
+  --char: #0c0807;
+  --elev-1: 0 1px 2px rgba(0, 0, 0, .4);
+  --elev-2: 0 2px 4px rgba(0, 0, 0, .35), 0 26px 50px -18px rgba(0, 0, 0, .75);
+  --texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Ccircle cx='63.3' cy='78.4' r='0.95' fill='%238a7d74'/%3E%3Ccircle cx='63.3' cy='119.7' r='0.47' fill='%238a7d74'/%3E%3Ccircle cx='88.2' cy='111.0' r='0.41' fill='%236b605a'/%3E%3Ccircle cx='19.9' cy='75.4' r='0.93' fill='%23f08a3c'/%3E%3Ccircle cx='83.4' cy='55.5' r='0.64' fill='%23ffb070'/%3E%3Ccircle cx='87.2' cy='116.4' r='0.39' fill='%23f08a3c'/%3E%3Ccircle cx='26.6' cy='33.9' r='0.37' fill='%238a7d74'/%3E%3Ccircle cx='45.7' cy='82.7' r='0.48' fill='%23ffb070'/%3E%3Ccircle cx='89.6' cy='70.0' r='0.78' fill='%238a7d74'/%3E%3Ccircle cx='91.7' cy='56.9' r='0.71' fill='%23f08a3c'/%3E%3Ccircle cx='99.1' cy='44.1' r='0.50' fill='%236b605a'/%3E%3Ccircle cx='4.2' cy='78.8' r='0.42' fill='%23f08a3c'/%3E%3Ccircle cx='118.5' cy='54.1' r='0.97' fill='%23f08a3c'/%3E%3Ccircle cx='29.9' cy='129.8' r='0.38' fill='%238a7d74'/%3E%3Ccircle cx='137.3' cy='55.6' r='0.40' fill='%23ffb070'/%3E%3Ccircle cx='109.0' cy='37.8' r='0.41' fill='%236b605a'/%3E%3Ccircle cx='2.1' cy='57.4' r='0.95' fill='%23ffb070'/%3E%3Ccircle cx='34.5' cy='14.1' r='0.39' fill='%238a7d74'/%3E%3Ccircle cx='24.9' cy='78.3' r='0.64' fill='%23ffb070'/%3E%3Ccircle cx='137.9' cy='107.7' r='0.62' fill='%238a7d74'/%3E%3Ccircle cx='16.3' cy='58.9' r='0.49' fill='%236b605a'/%3E%3Ccircle cx='121.0' cy='136.5' r='0.74' fill='%23f08a3c'/%3E%3C/svg%3E");
+  --texture-opacity: .5;
+  --glow-1: rgba(240, 120, 40, .22);
+  --glow-2: rgba(200, 60, 20, .16);
+
+  --brick: #7e3a25;
+  --mortar: #2c1a14;
+  --brick-shade: #6a2f1e;
+  --header-glow: rgba(255, 122, 42, .3);
+  --mouth: #1a0d08;
+  --fire-2: #ffb347;
+  --fire-glow: #ff7a2a;
+  --glow-opacity: .9;
+  --peel: #a87645;
+  --peel-2: #7f5530;
+  --flour: rgba(255, 245, 230, .5);
+
+  --crust: #d79a52;
+  --crust-light: #ebbb7a;
+  --crust-shadow: #9b6431;
+  --sauce: #b8321c;
+  --sauce-spot: #8f2412;
+  --bianca: #ecd7a6;
+  --bianca-spot: #d8bb78;
+  --pizza-shadow: rgba(0, 0, 0, .45);
+  --oven-char: #24140c;
+
+  --art-line: #0d0a09;
+  --art-ceramic: #efe5d6;
+  --art-glass: rgba(255, 255, 255, .22);
+  --art-dough: #d9a55e;
+  --art-leaf: #6aa152;
+  --art-cream: #f3e6cc;
+  --art-cocoa: #4a2a18;
+
+  --board: #1a1513;
+  --board-frame: #6b4528;
+  --board-ink: #f8ecd6;
+  --board-accent: #ffb347;
+
+  --map-filter: invert(.9) hue-rotate(180deg) saturate(.6) brightness(.85) contrast(.92) sepia(.15);
+
+  --footer-bg: #0a0807;
+
+  /* The hosted form draws white button text, so its primary stays dark enough to read. */
+  --jamstacks-color-primary: #b5361b;
+}
+
+/* ------------------------------------------------------------------
+   2. Tailwind theme. Only this template's palette exists: Tailwind's default colours
+   are switched off so new UI can't drift into a generic look.
+   ------------------------------------------------------------------ */
+@theme {
+  --color-*: initial;
+  --breakpoint-xs: 25rem;
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 62rem;
+  --breakpoint-xl: 80rem;
+}
+
+@theme static {
+  /* Display: Bricolage Grotesque, heavy and slightly condensed like a hand-painted shop sign. */
+  --font-display: "Bricolage Grotesque Variable", "Arial Narrow", "Helvetica Neue", system-ui, sans-serif;
+  --font-sans: "Manrope Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Marker hand: only for the specials board and small "just fired" labels. */
+  --font-hand: "Kalam", "Comic Sans MS", "Bradley Hand", cursive;
+  --radius-ui: 10px;
+  --radius-card: 18px;
+  --radius-panel: 26px;
+}
+
+@theme inline {
+  --color-white: #fff;
+  --color-bg: var(--bg);
+  --color-band: var(--bg-band);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-basil: var(--basil);
+  --color-basil-soft: var(--basil-soft);
+  --color-ember: var(--ember);
+  --color-header-glow: var(--header-glow);
+  --color-on-accent: var(--on-accent);
+  --color-board: var(--board);
+  --color-board-ink: var(--board-ink);
+  --color-board-accent: var(--board-accent);
+  --color-footer: var(--footer-bg);
+  /* Footer text sits on the always-dark footer in both modes. */
+  --color-footer-ink: #f1e6d6;
+  --color-footer-muted: #b9aa98;
+  --color-footer-soft: #d4c4ae;
+  --color-footer-flame: #ffad66;
+  --shadow-card: var(--elev-1);
+  --shadow-lift: var(--elev-2);
+}
+
+/* Layout helpers used across pages. */
+@utility wrap {
+  width: min(100% - 2 * var(--gutter), var(--page));
+  margin-inline: auto;
+}
+@utility section-y {
+  padding-block: var(--space-section);
+}
+/* The sign-painter look: heavy and a little condensed. */
+@utility font-sign {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 84%;
+  letter-spacing: -.02em;
+}
+
+/* ------------------------------------------------------------------
+   3. Base elements
+   ------------------------------------------------------------------ */
+@layer base {
+  html { background: var(--bg); scroll-padding-top: calc(var(--header-h) + .75rem); }
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(56rem 36rem at 85% -8%, var(--glow-1), transparent 62%),
+      radial-gradient(40rem 30rem at -5% 30rem, var(--glow-2), transparent 60%),
+      var(--bg);
+    background-repeat: no-repeat;
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Flour dust / ember grain over everything; purely decorative. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: var(--texture-opacity);
+    background-image: var(--texture);
+  }
+  main { flex: 1; outline: none; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 800; font-stretch: 86%; line-height: 1.02; letter-spacing: -.02em; text-wrap: balance; }
+  h1 em, h2 em { font-style: normal; color: var(--accent); }
+  p { text-wrap: pretty; }
+  abbr[title] { text-decoration: none; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
+  ::selection { background: var(--accent-soft); color: var(--text); }
+  @media (width < 40rem) {
+    body { font-size: 1rem; }
+  }
+}
+
+/* Outside the layer, so it beats the unlayered tokens above. */
+@media (width < 40rem) {
+  :root { --header-h: 4rem; }
+}
+
+/* ------------------------------------------------------------------
+   4. Shared building blocks. Reuse these instead of restyling each instance.
+   ------------------------------------------------------------------ */
+@layer components {
+  .button {
+    display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+    min-height: 3rem; padding: .7rem 1.35rem;
+    border: 2px solid var(--accent); border-radius: var(--radius-ui);
+    background: var(--accent); color: var(--on-accent);
+    font: inherit; font-weight: 800; letter-spacing: .01em; text-decoration: none; white-space: nowrap; cursor: pointer;
+    box-shadow: 0 4px 0 var(--accent-strong);
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .button:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--accent-strong); }
+  .button:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--accent-strong); }
+  .button-ghost { background: var(--surface); color: var(--text); border-color: var(--text); box-shadow: 0 4px 0 var(--text); }
+  .button-ghost:hover { box-shadow: 0 6px 0 var(--text); }
+  .button-ghost:active { box-shadow: 0 1px 0 var(--text); }
+  .button-quiet { min-height: 2.5rem; padding: .4rem 1rem; background: transparent; color: var(--text); border-color: var(--line); box-shadow: none; font-weight: 700; }
+  .button-quiet:hover { transform: none; box-shadow: none; border-color: var(--accent); }
+  /* Compact call button in the header. */
+  .button-sm { min-height: 2.5rem; padding: .35rem .8rem; box-shadow: 0 3px 0 var(--accent-strong); }
+  .button-sm:hover { box-shadow: 0 4px 0 var(--accent-strong); }
+
+  .text-link {
+    color: var(--accent); font-weight: 700;
+    text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .22em;
+    text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  .text-link:hover { text-decoration-color: var(--accent); }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: .55rem;
+    font-size: .8rem; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .eyebrow::before {
+    content: ""; width: .7rem; height: .9rem; flex: none; background: currentColor;
+    /* A little flame. */
+    clip-path: path("M5.6 0C6.4 3 11 4.6 11 9.2 11 12.4 8.6 14.4 5.6 14.4S0 12.4 0 9.6C0 7 1.8 5.6 2.8 4.2 3 6 3.8 7 5 7.2 4 4.8 4.4 2 5.6 0Z");
+    transform: scale(.78); transform-origin: left center;
+  }
+
+  /* Marker-written label, e.g. "just fired". Kalam is used for nothing else outside the specials board. */
+  .hand-label { font-family: var(--font-hand); font-weight: 700; font-size: 1.05rem; line-height: 1.1; color: var(--accent); }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: .4rem;
+    min-height: 2.4rem; padding: .35rem .95rem;
+    border: 1.5px solid var(--line); border-radius: 999px;
+    background: var(--surface); color: var(--text);
+    font: inherit; font-size: .92rem; font-weight: 700; text-decoration: none; white-space: nowrap; cursor: pointer;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .chip:hover { border-color: var(--accent); }
+  .chip[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: var(--bg); }
+  .chip[aria-pressed="true"]::before { content: "✓"; }
+
+  .sticker {
+    display: inline-flex; align-items: center;
+    padding: .12rem .6rem; border-radius: 6px;
+    font-size: .72rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+    background: var(--accent-soft); color: var(--accent-strong);
+  }
+  .sticker-seasonal { background: color-mix(in srgb, var(--ember) 20%, var(--surface)); color: color-mix(in srgb, var(--ember) 45%, var(--text)); }
+  .sticker-new { background: var(--basil-soft); color: var(--basil); }
+  .sticker-special { background: var(--text); color: var(--bg); }
+  .sticker-soldout { background: transparent; color: var(--muted); border: 1.5px dashed currentColor; }
+
+  /* Small diet tag (VG, V, N). */
+  .diet-tag {
+    display: inline-grid; place-items: center; height: 1.5rem; min-width: 1.75rem; padding-inline: .35rem;
+    border: 1.5px solid var(--line); border-radius: 6px; cursor: help;
+    font-size: .7rem; font-weight: 800; letter-spacing: .04em; color: var(--muted);
+  }
+  .diet-tag[data-diet="vegan"], .diet-tag[data-diet="vegetarian"] { border-color: color-mix(in srgb, var(--basil) 45%, transparent); background: var(--basil-soft); color: var(--basil); }
+  .diet-tag[data-diet="contains-nuts"] { border-style: dashed; }
+
+  /* A surface card with a faintly burnt edge, like the lid of a pizza box near the oven. */
+  .card {
+    border-radius: var(--radius-card); border: 1.5px solid var(--line);
+    background: radial-gradient(120% 120% at 50% 40%, transparent 62%, var(--burn)), var(--surface);
+  }
+  /* Leopard-spot char marks in one corner. Add to a positioned .card. */
+  .char-spots::after {
+    content: ""; position: absolute; top: .6rem; right: .7rem; width: 2.6rem; height: 1.6rem; pointer-events: none;
+    opacity: .5;
+    background:
+      radial-gradient(circle at 20% 40%, var(--char) 0 3px, transparent 4px),
+      radial-gradient(circle at 52% 70%, var(--char) 0 2px, transparent 3px),
+      radial-gradient(circle at 78% 30%, var(--char) 0 4px, transparent 5px),
+      radial-gradient(circle at 92% 80%, var(--char) 0 1.5px, transparent 2.5px);
+  }
+}
+
+/* ------------------------------------------------------------------
+   5. Illustrations and animation (SVG art is coloured by the tokens above)
+   ------------------------------------------------------------------ */
+@layer components {
+  /* Firelight flickering over the mouth of the hero oven picture (components/hero-oven.tsx). */
+  .oven-firelight {
+    border-radius: 50%; filter: blur(18px); mix-blend-mode: screen;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--fire-glow) 80%, transparent), transparent);
+    opacity: calc(var(--glow-opacity) * .55); animation: firelight 3.2s ease-in-out infinite alternate;
+  }
+
+  /* Radial ember glow behind the hero; strongest in dark mode. */
+  .hero-glow::before {
+    content: ""; position: absolute; inset: 4% 2% 6%; z-index: -1; border-radius: 50%; filter: blur(50px);
+    background: radial-gradient(circle at 45% 60%, color-mix(in srgb, var(--fire-glow) 70%, transparent), transparent 62%);
+    opacity: calc(.25 + var(--glow-opacity) * .7);
+  }
+
+  /* Pizza drawings */
+  .pizza-art { display: block; flex: none; overflow: visible; }
+
+  /* Small dish drawings sit on a soft disc tinted by the item's colour (--art-tint). */
+  .menu-art {
+    position: relative; display: inline-grid; place-items: center; flex: none; border-radius: 50%;
+    background: radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--art-tint) 26%, var(--surface)), color-mix(in srgb, var(--art-tint) 10%, var(--surface)) 70%);
+  }
+  .menu-art svg { width: 84%; height: 84%; overflow: visible; }
+
+  /* Stickers and stamps settle into place once when the page loads. */
+  .settle { animation: settle .7s cubic-bezier(.2, 1.4, .4, 1) both; animation-delay: .25s; }
+  .stamp text { font-family: var(--font-display); font-weight: 800; font-stretch: 80%; letter-spacing: .16em; text-transform: uppercase; }
+
+  /* Hand-lettered specials board in a wooden frame. */
+  .board {
+    position: relative; color: var(--board-ink); background:
+      radial-gradient(90% 70% at 30% 20%, rgba(255, 255, 255, .06), transparent 70%),
+      var(--board);
+    border: 12px solid var(--board-frame); border-radius: 14px;
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, .35), inset 0 0 40px rgba(0, 0, 0, .45), var(--elev-2);
+  }
+  .board::before {
+    /* Chalky smudges. */
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+    background:
+      radial-gradient(40% 18% at 70% 85%, rgba(255, 255, 255, .06), transparent),
+      radial-gradient(30% 14% at 20% 60%, rgba(255, 255, 255, .05), transparent);
+  }
+  .board__hand { font-family: var(--font-hand); }
+
+  /* Google Maps embed; --map-filter turns it into a night map in dark mode. */
+  .map { position: relative; overflow: hidden; min-height: 20rem; border-radius: var(--radius-panel); border: 1.5px solid var(--line); background: var(--surface-2); box-shadow: var(--elev-1); }
+  .map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: var(--map-filter); }
+
+  @keyframes firelight {
+    0% { transform: scale(1); filter: blur(18px) brightness(1); }
+    40% { transform: scale(1.06, .97); filter: blur(18px) brightness(1.25); }
+    100% { transform: scale(.96, 1.04); filter: blur(18px) brightness(.85); }
+  }
+  @keyframes settle {
+    from { opacity: 0; transform: scale(1.25) rotate(-10deg); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes order-pulse { 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--basil) 0%, transparent); } }
+}
+
+/* ------------------------------------------------------------------
+   6. Stateful pieces styled by attributes the components set
+   ------------------------------------------------------------------ */
+@layer components {
+  /* Ordering status: neutral until the browser works out the time (components/ordering-status.tsx). */
+  .order-dot { width: .6rem; height: .6rem; flex: none; border-radius: 50%; background: var(--muted); }
+  [data-tone="open"] > .order-dot { background: var(--basil); box-shadow: 0 0 0 4px color-mix(in srgb, var(--basil) 25%, transparent); animation: order-pulse 2.6s ease-in-out infinite; }
+  [data-tone="soon"] > .order-dot { background: var(--ember); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ember) 30%, transparent); }
+  [data-tone="closed"] > .order-dot { background: var(--accent); }
+  .order-phone { display: none; }
+  .order-status:not([data-tone]) .order-phone { display: inline; }
+
+  .menu-item:target { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .menu-item[data-sold-out="true"] .pizza-art,
+  .menu-item[data-sold-out="true"] .menu-art { filter: grayscale(.9); opacity: .55; }
+
+  .faq summary { list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; flex: none; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: var(--accent-soft); color: var(--accent-strong); font-size: 1.2rem; font-weight: 800; transition: transform .2s ease; }
+  .faq[open] summary::after { transform: rotate(45deg); }
+
+  /* Hosted Jamstacks form host (components/jamstacks-support-form.tsx). */
+  .enquiry { position: relative; padding: clamp(1rem, 3vw, 2rem); border-radius: var(--radius-panel); background: var(--surface); border: 1.5px solid var(--line); box-shadow: var(--elev-1); }
+  .enquiry__host { display: block; }
+  .enquiry[data-state="loading"], .enquiry[data-state="loaded"] { min-height: 34rem; border-style: dashed; box-shadow: none; }
+  .enquiry__status { padding: 1.25rem 0 0; color: var(--muted); font-size: .9875rem; }
+  .enquiry__status:empty { display: none; }
+  .enquiry[data-state="error"] .enquiry__status,
+  .enquiry[data-state="slow"] .enquiry__status { padding: 1.1rem 1.4rem; border-radius: var(--radius-ui); border-left: 4px solid var(--accent); background: var(--surface-2); color: var(--text); }
+  @media (width < 40rem) { .enquiry[data-state="loading"], .enquiry[data-state="loaded"] { min-height: 30rem; } }
+
+  .copy-status:empty { display: none; }
+  .scrollbar-none { scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+
+@media print {
+  body { background: #fff; color: #000; }
+  body::after { display: none; }
+  .site-header { position: static; backdrop-filter: none; }
+  .menu-item { break-inside: avoid; border-color: #ccc; }
+  .site-footer { background: #fff; color: #000; }
+  .board { background: #fff; color: #000; border-color: #999; box-shadow: none; }
+}

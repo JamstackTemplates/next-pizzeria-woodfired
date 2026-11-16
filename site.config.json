@@ -1,0 +1,10 @@
+{
+  "name": "Acme Pizza",
+  "description": "Wood-fired pizza from a domed brick oven. The menu, this week's special, lunch and dinner hours, and a number to call for pickup.",
+  "domain": "next-pizzeria-woodfired.jamstacks.net",
+  "timeZone": "America/New_York",
+  "jamstacks": {
+    "siteId": "",
+    "cdnUrl": "https://cdn.jamstacks.net"
+  }
+}
