@@ -78,7 +78,7 @@ const lunch = { label: 'Lunch', opens: '12:00', closes: '14:30' } as const;
 const dinner = { label: 'Dinner', opens: '17:00', closes: '22:00' } as const;
 
 export const pizzeria: Pizzeria = {
-  name: 'Acme Pizza',
+  name: 'Forno Vivo',
   tagline: 'Wood-fired · blistered · ready in ninety seconds',
   introduction:
     'A neighbourhood pizzeria built around one domed brick oven. Slow-fermented dough, good tomatoes and a fire we light every morning. Eat in, or call ahead and pick up.',

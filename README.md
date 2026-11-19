@@ -4,7 +4,7 @@ A bold, fire-lit theme for wood-fired pizzerias: a pizza menu where every pie is
 
 It exports to plain static files, deploys to GitHub Pages (custom domain or `/repository/` path) and works with no backend. Light mode is "flour & fire": flour white, charred black, tomato red and basil green. Dark mode is "the oven at night": charcoal, ash and flame orange, with the oven glowing. Both follow the visitor's device unless they pick one with the header toggle.
 
-**Acme Pizza**, its menu, prices, story and contact details are fictitious placeholders. The sample address is a public landmark, New Haven Green (Church Street and Chapel Street, New Haven, CT), so the map has something real to show. Replace all of them with your own.
+**Forno Vivo**, its menu, prices, story and contact details are fictitious placeholders. The sample address is a public landmark, New Haven Green (Church Street and Chapel Street, New Haven, CT), so the map has something real to show. Replace all of them with your own.
 
 ## Pages
 
@@ -170,7 +170,7 @@ The footer ends with "with ❤️ [jamstacks.net](https://jamstacks.net)". It's 
 
 ```json
 {
-  "name": "Acme Pizza",
+  "name": "Forno Vivo",
   "description": "Wood-fired pizza from a domed brick oven. The menu, this week's special, lunch and dinner hours, and a number to call for pickup.",
   "domain": "next-pizzeria-woodfired.jamstacks.net",
   "timeZone": "America/New_York",
@@ -282,7 +282,7 @@ jamstacks/              optional template publishing metadata and gallery captur
 
 ## Before publishing your website
 
-- Replace Acme Pizza, the address (and its `note`), directions, email, phone, menu, prices, story, FAQs and social links with your own details.
+- Replace Forno Vivo, the address (and its `note`), directions, email, phone, menu, prices, story, FAQs and social links with your own details.
 - Set your real services and `lastOrdersMinutes`, and `timeZone` in `site.config.json`. Check the ordering status on the home page at a few times of day.
 - Choose this week's special and your 4–6 featured pizzas.
 - Replace `domain` in `site.config.json` with your own domain (or `""`). Update the site title/description, icon and social preview image.
